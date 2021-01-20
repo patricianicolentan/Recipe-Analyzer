@@ -3,8 +3,8 @@ from collections import defaultdict
 from collections import OrderedDict
 from operator import itemgetter
 
-# Version 4 of the recipe analyzer. Compared to V3, 
-# this one prints the top three ingredient pairs regardless of their scores.
+# Version 4 of the recipe analyzer. Compared to V3, this one prints the top three ingredient pairs regardless of their scores.
+# I also fixed a bug about printing just 1 recipe's ingredients.
 
 # declarations
 recipes = []
@@ -56,7 +56,10 @@ print("Found " + str(len(paired_recipes)) + " recipes with that ingredient.")
 x = input("How many recipes' ingredients do you want to see?\n")
 y = int(x)
 while y > 0:
-	print(paired_recipes[y])
+	if y == 1:
+		print(paired_recipes[0])
+	else:
+		print(paired_recipes[y])
 	y -= 1
 
 
