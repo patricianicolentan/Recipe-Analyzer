@@ -3,8 +3,8 @@ from collections import defaultdict
 from collections import OrderedDict
 from operator import itemgetter
 
-# Version 3 of the recipe analyzer. Comapred to V2, 
-# this one uses defaultdict to update a counter value in the ingredient scores dictionary, and also cleans the ingredients text.
+# Version 4 of the recipe analyzer. Compared to V3, 
+# this one prints the top three ingredient pairs regardless of their scores.
 
 # declarations
 recipes = []
@@ -16,6 +16,7 @@ ingredient_scores = defaultdict(int)
 
 i = 0
 j = 0
+k = 0
 
 all_stopwords = ['/', 'cup', 'of', 'cups', 'sifted', 'melted', 'pint', 'chilled', 'salted', 'unsalted', 'fresh', 'frozen', 'thawed', 'dried', 'kernels', 'roasted', 'marinated', 'package', 'packages', 'unchilled', 'drained', 'and', 'of', ',', 'pieces', 'piece', 'chopped', 'cubed', 'diced', 'sliced', 'gram', 'grams', 'oz', 'ounce', 'ounces', 'teaspoon', 'tablespoon', 'teaspoons', 'tablespoons', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'half', 'third', 'fourth', 'fifth', '0.25', '.25', '1/2', '1/3', '1/4', '1/5', '3/4', '2/3', '2/5', '3/5', '1/8', 'warm', 'shredded', 'optional', '(optional)', 'active', 'dry', 'instant']
 
@@ -69,15 +70,13 @@ for ingredient_list in paired_recipes:
 # this allows the sorting by descending order of the count score
 d = OrderedDict(sorted(ingredient_scores.items(), key=itemgetter(1), reverse=True))
 
-
-# this prints the ingredient pairs and their scores as long as they have been paired at least 10 times; this is changeable.
-# future versions may make the number of printed pairs user-defined as well
+# this prints the top three ingredient pairs and their scores; this is changeable.
 for pair_d in d:
-	if ingredient_scores[pair_d] > 10:
+	if k < 3:
 		print((pair_d) + ": " + str(ingredient_scores[pair_d]))
-
-
-
+		k += 1
+	else:
+		exit(0)
 
 
 
